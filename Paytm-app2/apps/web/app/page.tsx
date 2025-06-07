@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Card } from "@repo/ui/card";
 import { Gradient } from "@repo/ui/gradient";
 import { TurborepoLogo } from "@repo/ui/turborepo-logo";
+import { Test } from "@repo/ui/components/Test";
 
 const LINKS = [
   {
@@ -51,6 +52,9 @@ export default function Page() {
               src="/vercel.svg"
               width={100}
             />
+            <div className="text-amber-300">
+              <Test></Test>
+            </div>
           </a>
         </div>
       </div>
@@ -76,6 +80,9 @@ export default function Page() {
 
             <div className="flex justify-center items-center z-50">
               <TurborepoLogo />
+              <div className="text-amber-300">
+              <Test></Test>
+            </div>
             </div>
           </div>
           <Gradient
