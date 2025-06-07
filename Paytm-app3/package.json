@@ -1,5 +1,5 @@
 {
-  "name": "Paytm-app3",
+  "name": "paytm-app3",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -13,12 +13,8 @@
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
   },
+  "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
-  },
-  "packageManager": "npm@10.5.2",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  }
 }
