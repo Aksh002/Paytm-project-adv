@@ -4,6 +4,7 @@ import { Gradient } from "@repo/ui/gradient";
 import { TurborepoLogo } from "@repo/ui/turborepo-logo";
 import { Test } from "@repo/ui/components/Test";
 import { PrismaClient } from "@repo/db/client"
+import Balance from "./balance";
 
 const LINKS = [
   {
@@ -28,6 +29,7 @@ const LINKS = [
       "Instantly deploy your Turborepo to a shareable URL with Vercel.",
   },
 ];
+
 
 export default function Page() {
   return (
@@ -55,6 +57,7 @@ export default function Page() {
             />
             <div className="text-amber-300">
               <Test></Test>
+              <Balance></Balance>
             </div>
           </a>
         </div>
@@ -83,6 +86,9 @@ export default function Page() {
               <TurborepoLogo />
               <div className="text-amber-300">
               <Test></Test>
+              <div>
+                
+              </div>
             </div>
             </div>
           </div>
