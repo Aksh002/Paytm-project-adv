@@ -4,7 +4,7 @@ import { Gradient } from "@repo/ui/gradient";
 import { TurborepoLogo } from "@repo/ui/turborepo-logo";
 import { Test } from "@repo/ui/components/Test";
 import { PrismaClient } from "@repo/db/client"
-import Balance from "./balance";
+
 
 const LINKS = [
   {
@@ -57,7 +57,6 @@ export default function Page() {
             />
             <div className="text-amber-300">
               <Test></Test>
-              <Balance></Balance>
             </div>
           </a>
         </div>

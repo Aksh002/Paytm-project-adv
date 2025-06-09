@@ -18,5 +18,20 @@ model user{
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+  number String @unique
+  password String
+  auth_type AuthType
+}
+
+model Merchant{
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String?
+  auth_type AuthType
+}
+
+enum AuthType{
+  Google
+  Github
 }
 
