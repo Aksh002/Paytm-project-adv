@@ -22,6 +22,34 @@ export const authOptions = {
                         number : credentials.number
                     }
                 })
+                if (existingUser){
+                    const pswdValidation = await bcrypt.compare(credentials.password,existingUser.password)
+                    if (pswdValidation){
+                        return {
+                            id : existingUser.id.toString(),
+                            name : existingUser.name,
+                            email : existingUser.number
+                        }
+                    }
+                    else
+                        return null
+                }
+                try{
+                    const user = await db.user.ceate({
+                        data:{
+                            number : credentials.number,
+                            password : hashedpswd
+                        }
+                    })
+                    return {
+                        id :  user.id.toString(),
+                        name : user.name || "User", // idk where this name is coming from so far
+                        email : user.email
+                    }
+                }catch(e){
+                    console.error(e)
+                }
+                return null
             }
         }),
         GoogleProvider({
@@ -32,5 +60,13 @@ export const authOptions = {
             clientId : process.env.GITHUB_ID || "",
             clientSecret : process.env.GITHUB_CLIENT_SECRET || ""
         })
-    ]
+    ],
+    secret : process.env.JWT_SECRET || "secret",
+    callbacks : {
+        async session({ token,session }:any){
+            session.user.id=token.sub
+
+            return session;
+        }
+    }
 }
