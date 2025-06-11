@@ -35,7 +35,7 @@ export const authOptions = {
                         return null
                 }
                 try{
-                    const user = await db.user.ceate({
+                    const user = await db.user.create({
                         data:{
                             number : credentials.number,
                             password : hashedpswd

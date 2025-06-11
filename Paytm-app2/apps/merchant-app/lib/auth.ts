@@ -10,14 +10,14 @@ export const authOptions = {
             name:'Credentials',
             credentials:{
                 phone: { label : "Phone number" , type : "text" , placeholder : "1234567890"},
-                password: { label : "Password" , type : "password" , placeholder : "******"},
-                email: { label : "Email" , type : "email" , placeholder : "example@gmail.com"}
+                email: { label : "Email" , type : "email" , placeholder : "example@gmail.com"},
+                password: { label : "Password" , type : "password" , placeholder : "******"}
             },
             async authorize(credentials:any){
                 // ZOD VALIDATION logic 
                 // OTP VALIDATION Logic 
                 const hashedpswd = await bcrypt.hash(credentials.password,10);
-                const existingMerchant = await prisma.Merchant.findFirst({
+                const existingMerchant = await prisma.merchant.findFirst({
                     where : {
                         number : credentials.number
                     }
@@ -35,7 +35,7 @@ export const authOptions = {
                         return null
                 }
                 try{
-                    const merchant = await prisma.Merchant.ceate({
+                    const merchant = await prisma.merchant.create({
                         data:{
                             number : credentials.number,
                             password : hashedpswd
