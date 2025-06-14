@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs"
 import CredentialsProvider  from "next-auth/providers/credentials"
 import GoogleProvider  from "next-auth/providers/google"
 
-
 export const authOptions = {
     providers:[
         CredentialsProvider({
@@ -16,6 +15,7 @@ export const authOptions = {
             async authorize(credentials:any){
                 // ZOD VALIDATION logic 
                 // OTP VALIDATION Logic 
+                console.log("👉 Received credentials:", credentials);
                 const hashedpswd = await bcrypt.hash(credentials.password,10);
                 const existingMerchant = await prisma.merchant.findFirst({
                     where : {
@@ -38,7 +38,9 @@ export const authOptions = {
                     const merchant = await prisma.merchant.create({
                         data:{
                             number : credentials.number,
-                            password : hashedpswd
+                            password : hashedpswd,
+                            email: credentials.email,
+                            auth_type: "Google" // or the appropriate value for your use case
                         }
                     })
                     return {

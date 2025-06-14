@@ -10,8 +10,8 @@ export const authOptions = {
             name:'Credentials',
             credentials:{
                 phone: { label : "Phone number" , type : "text" , placeholder : "1234567890"},
-                password: { label : "Password" , type : "password" , placeholder : "******"},
-                email: { label : "Email" , type : "email" , placeholder : "example@gmail.com"}
+                email: { label : "Email" , type : "email" , placeholder : "example@gmail.com"},
+                password: { label : "Password" , type : "password" , placeholder : "******"}
             },
             async authorize(credentials:any){
                 // ZOD VALIDATION logic 
