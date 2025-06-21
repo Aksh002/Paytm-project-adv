@@ -8,7 +8,7 @@ export const authOptions = {
         CredentialsProvider({
             name:'Credentials',
             credentials:{
-                phone: { label : "Phone number" , type : "text" , placeholder : "1234567890"},
+                number: { label : "Phone number" , type : "text" , placeholder : "1234567890"},
                 email: { label : "Email" , type : "email" , placeholder : "example@gmail.com"},
                 password: { label : "Password" , type : "password" , placeholder : "******"}
             },
@@ -32,7 +32,7 @@ export const authOptions = {
                         }
                     }
                     else
-                        return null
+                        return null                                                          
                 }
                 try{
                     const merchant = await prisma.merchant.create({

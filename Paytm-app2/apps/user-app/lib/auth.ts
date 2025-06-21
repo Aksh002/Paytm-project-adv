@@ -9,7 +9,7 @@ export const authOptions = {
         CredentialsProvider({
             name:'Credentials',
             credentials:{
-                phone: { label : "Phone number" , type : "text" , placeholder : "1234567890"},
+                number: { label : "Phone number" , type : "text" , placeholder : "1234567890"},
                 email: { label : "Email" , type : "email" , placeholder : "example@gmail.com"},
                 password: { label : "Password" , type : "password" , placeholder : "******"}
             },
@@ -23,6 +23,9 @@ export const authOptions = {
                     }
                 })
                 if (existingUser){
+                    console.log(`password from db:- ${existingUser.password}`);
+                    console.log(`raw password from user:- ${credentials.password}`);
+                    console.log(`hashed password from user:- ${hashedpswd}`);
                     const pswdValidation = await bcrypt.compare(credentials.password,existingUser.password)
                     if (pswdValidation){
                         return {
@@ -38,7 +41,9 @@ export const authOptions = {
                     const user = await db.user.create({
                         data:{
                             number : credentials.number,
-                            password : hashedpswd
+                            password : hashedpswd,
+                            email: credentials.email,
+                            auth_type: "Google" // or another appropriate value based on your schema
                         }
                     })
                     return {
