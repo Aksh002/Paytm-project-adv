@@ -13,7 +13,6 @@ export default function Page() {
   const session = useSession();
   return (
     <div className="">
-      <Appbar onSignin={signIn} onSignout={signOut} user={session.data?.user}></Appbar>
     </div>
   );
 }
