@@ -17,10 +17,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Providers>
-        <AppbarClient></AppbarClient>
-        <body className={geist.className}>{children}</body>
-      </Providers>
+      
+        
+        <body className={geist.className}>
+          <Providers>
+            <AppbarClient></AppbarClient>
+            {children}
+          </Providers>
+        </body>
     </html>
   );
 }

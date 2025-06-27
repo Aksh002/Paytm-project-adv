@@ -1,5 +1,6 @@
 "use client"
 
+import { useCreateOnRampTransaction } from "@/lib/hooks/useCreateOnRampTransaction"
 import { Button } from "@repo/ui/components/Button"
 import { Card } from "@repo/ui/components/Card"
 import { Select } from "@repo/ui/components/Selelct"
@@ -18,39 +19,52 @@ const SUPPORTED_BANKS = [{
 
 export const AddMoneyCard = () =>{
     const [redirectUrl, setRedirectUrl] = useState(SUPPORTED_BANKS[0]?.redirectUrl);
-    const [provider , setProvider] = useState(SUPPORTED_BANKS[0]?.name);
-    const [amount,setAmount] = useState("");
-
-    function onRampTransaction(provider:string,amount:number){                          // This fxn purpose is to trigger this hook
-        //useOnRampTransaction(provider ?? "", amount);                                   
-    }
+    const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name);
+    const [amount, setAmount] = useState("");
     
+    // Call the hook at component level - this returns an object with create function and loading state
+    const { create: createTransaction, loading } = useCreateOnRampTransaction();
+
+    const handleAddMoney = async () => {
+        if (!amount || !provider) {
+            alert("Please enter amount and select a bank");
+            return;
+        }
+
+        // Call the create function returned by the hook
+        const result = await createTransaction(provider, Number(amount) * 100);
+        
+        if (result.message === "On Ramp Transaction added") {
+            // Redirect to bank on success
+            window.location.href = redirectUrl || "";
+        } else {
+            alert(result.message || "Error creating transaction");
+        }
+    };
+
     return <div>
         <Card title="Add Money">
             <div className="w-full">
                 <div>
-                    <TextInput placeholder={"Amount"} label={"Amount"} onChange={setAmount}></TextInput>
+                    <TextInput placeholder={"Amount"} label={"Amount"} onChange={setAmount} />
                 </div>
                 <div>
                     <div className="py-4 text-left">Bank</div>
                     <div>
-                        <Select onSelect={(value) =>{
+                        <Select onSelect={(value) => {
                             setRedirectUrl(SUPPORTED_BANKS.find(x => x.name === value)?.redirectUrl || "");
                             setProvider(SUPPORTED_BANKS.find(x => x.name === value)?.name);
                         }} options={SUPPORTED_BANKS.map(x => ({
                             key: x.name,
                             value: x.name
-                            })
-                        )}></Select>
+                        }))} />
                     </div>
                 </div>
                 <div>
-                    <Button onClick={async() =>{
-                        onRampTransaction(provider ?? "", Number(amount) * 100);
-                        //await createOnRampTransaction(provider ?? "", Number(amount) * 100);              // Never call a server action in a client component;    // Its will possibly work, but not a good practice
-                        window.location.href = redirectUrl || "";
-                    }}>
-                        Add Money
+                    <Button 
+                        onClick={handleAddMoney}
+                    >
+                        {loading ? "Processing..." : "Add Money"}
                     </Button>
                 </div>
             </div>

@@ -1,5 +1,3 @@
-"use client"
-
 import { Card } from "@repo/ui/components/Card"
 
 export const BalanceCard = ({amount,locked}:{
