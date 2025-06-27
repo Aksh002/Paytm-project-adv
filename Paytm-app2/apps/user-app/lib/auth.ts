@@ -16,34 +16,40 @@ export const authOptions = {
             async authorize(credentials:any){
                 // ZOD VALIDATION logic 
                 // OTP VALIDATION Logic 
-                const hashedpswd = await bcrypt.hash(credentials.password,10);
-                const existingUser = await db.user.findFirst({
-                    where : {
-                        number : credentials.number
-                    }
-                })
-                if (existingUser){
-                    console.log(`password from db:- ${existingUser.password}`);
-                    console.log(`raw password from user:- ${credentials.password}`);
-                    console.log(`hashed password from user:- ${hashedpswd}`);
-                    const pswdValidation = await bcrypt.compare(credentials.password,existingUser.password)
-                    if (pswdValidation){
-                        return {
-                            id : existingUser.id.toString(),
-                            name : existingUser.name,
-                            email : existingUser.number
+                try{
+                    const existingUser = await db.user.findFirst({
+                        where : {
+                            number : credentials.number
                         }
+                    })
+                    if (existingUser){
+                        console.log(`password from db:- ${existingUser.password}`);
+                        console.log(`raw password from user:- ${credentials.password}`);
+                        //console.log(`hashed password from user:- ${hashedpswd}`);
+                        const pswdValidation = await bcrypt.compare(credentials.password,existingUser.password)
+                        if (pswdValidation){
+                            return {
+                                id : existingUser.id.toString(),
+                                name : existingUser.name,
+                                email : existingUser.email,
+                                number : existingUser.number
+                            }
+                        }
+                        else
+                            return null
                     }
-                    else
-                        return null
+                }catch(error){
+                    console.log(error);
+                    return null;
                 }
                 try{
+                    const hashedpswd = await bcrypt.hash(credentials.password,10);
                     const user = await db.user.create({
                         data:{
                             number : credentials.number,
                             password : hashedpswd,
                             email: credentials.email,
-                            auth_type: "Google" // or another appropriate value based on your schema
+                            auth_type: 'Credentials' // or another appropriate value based on your schema
                         }
                     })
                     return {

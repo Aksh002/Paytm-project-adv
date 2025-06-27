@@ -38,7 +38,7 @@ export async function createOnRampTransaction(provider:string,amount:number){
         }
     }catch(error){
         return{
-            message:`Error while onRam`
+            message:`Error while onRam:- ${error}`
         }
     }
 }
