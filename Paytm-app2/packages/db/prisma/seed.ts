@@ -1,14 +1,27 @@
 import { PrismaClient } from '../generated/prisma'
+import bcrypt from 'bcryptjs'
 const prisma = new PrismaClient()
 
+/*
+To run this seed file and add this mock data in db:-
+  Step1:- Update /packages/db/package.json with:-
+          "prisma": {
+            "seed": "ts-node prisma/seed.ts"
+          }
+  Step2:- Run cmd to seed db:-
+          npx prisma db seed
+*/
+
 async function main() {
+  const aliceHashPswd = await bcrypt.hash('alice',10);
+  const bobHashPswd = await bcrypt.hash('bob',10);
   const alice = await prisma.user.upsert({
     where: { number: '9999999999' },
     update: {},
     create: {
       email:'alice@gmail.com',
       number: '9999999999',
-      password: 'alice',
+      password: aliceHashPswd,
       name: 'alice',
       auth_type:'Credentials',
       OnRampTransactions: {
@@ -28,7 +41,7 @@ async function main() {
     create: {
       email: 'bob@gmail.com',
       number: '9999999998',
-      password: 'bob',
+      password: bobHashPswd,
       name: 'bob',
       auth_type:'Credentials',
       OnRampTransactions: {
@@ -53,3 +66,15 @@ main()
     await prisma.$disconnect()
     process.exit(1)
   })
+
+
+
+
+  /*                    Reseting db
+-npx prisma migrate reset:-
+    What this command does:
+      -Drops your current database.
+      -Creates a new, empty database with the same name.
+      -Applies all your existing migrations to recreate the table structure.
+      -Runs your seed script (seed.ts) to populate the database with initial data.
+  */
