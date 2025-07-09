@@ -24,6 +24,12 @@ async function main() {
       password: aliceHashPswd,
       name: 'alice',
       auth_type:'Credentials',
+      Balance: {
+        create: {
+            amount: 20000,
+            locked: 0
+        }
+      },
       OnRampTransactions: {
         create: {
           startTime: new Date(),
@@ -44,6 +50,12 @@ async function main() {
       password: bobHashPswd,
       name: 'bob',
       auth_type:'Credentials',
+      Balance: {
+        create: {
+            amount: 2000,
+            locked: 0
+        }
+      },
       OnRampTransactions: {
         create: {
           startTime: new Date(),
