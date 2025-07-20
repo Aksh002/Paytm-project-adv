@@ -6,8 +6,8 @@ interface AppbarProps{
     },
 
     // Find and replace the type of these
-    onSignin:any,
-    onSignout:any,
+    onSignin: ()=>void,
+    onSignout:()=>void,                                         // TODO:- find any Next type for this, ther mut be for signin/signout fxn from next-auth/react
 }
 
 export const Appbar = ({

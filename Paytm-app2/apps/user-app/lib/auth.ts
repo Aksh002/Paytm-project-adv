@@ -52,6 +52,7 @@ export const authOptions = {
                             auth_type: 'Credentials' // or another appropriate value based on your schema
                         }
                     })
+                    // Send an otp to the users' phone number
                     return {
                         id :  user.id.toString(),
                         name : user.name || "User", // idk where this name is coming from so far
