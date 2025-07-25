@@ -50,7 +50,20 @@ export const OnRampTransaction = ({
                             className="flex justify-between"
                         >
                             <div>
-                                <div className="text-sm">Received INR</div>
+                                <div className="text-sm">
+                                    <span>{t.status == "Success" && 
+                                        <span>Recieved </span>
+                                    }</span>
+
+                                    <span>{t.status == "Processing" && 
+                                        <span>Processing OnRamp </span>
+                                    }</span>
+                                    <span>{t.status == "Failure" && 
+                                        <span>Faiure OnRamp </span>
+                                    }</span>
+
+                                    <span>INR</span>
+                                </div>
                                 <div className="text-slate-600 text-xs">
                                     {t.time.toDateString()}
                                 </div>

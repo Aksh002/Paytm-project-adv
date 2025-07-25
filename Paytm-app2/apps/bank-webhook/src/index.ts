@@ -14,7 +14,7 @@ app.post("/hdfcWebhook",async (req,res)=>{
         amount : string
     } = {
         token : req.body.token,
-        userId : req.body.user_identifier,
+        userId : req.body.userId,
         amount : req.body.amount
     }
     // update balance in db and txn
@@ -24,7 +24,9 @@ app.post("/hdfcWebhook",async (req,res)=>{
         [
             db.balance.updateMany({
                 where:{
-                    userId : Number(paymentInfo.userId)
+                    userId : {
+                        equals: Number(paymentInfo.userId)
+                    }
                 },
                 data:{
                     amount:{

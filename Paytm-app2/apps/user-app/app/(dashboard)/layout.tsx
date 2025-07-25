@@ -2,6 +2,7 @@ import { SidebarItem } from "@repo/ui/components/SideBarItem"
 import { Homeicon } from "@repo/ui/icons/homeicon"
 import { TransferIcon } from "@repo/ui/icons/TransferIcon"
 import { TransactionIcon } from "@repo/ui/icons/TransactionIcon"
+import { P2PtransferIcon } from "@repo/ui/icons/P2Ptransfer"
 
 
 export default function Layout({children}:{children:React.ReactNode}){
@@ -12,9 +13,10 @@ export default function Layout({children}:{children:React.ReactNode}){
                     <SidebarItem href="/dashboard" icon={<Homeicon active={false} />}>Dashboard</SidebarItem>
                     <SidebarItem href="/transfer" icon={<TransferIcon/>}>Transfer</SidebarItem>
                     <SidebarItem href="/transactions" icon={<TransactionIcon active={false} />}>Transactions</SidebarItem>
+                    <SidebarItem href="/p2pTransfer" icon={<P2PtransferIcon active={false} />}>P2P Transfer</SidebarItem>
                 </div>
             </div>
-            <div className="w-full">
+            <div className="flex-1">
                 {children}
             </div>
         </div>
