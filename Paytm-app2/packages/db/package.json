@@ -17,7 +17,8 @@
     "bcryptjs": "^3.0.2"
   },
   "exports": {
-    "./client": "./index.ts"
+    "./client": "./index.ts",
+    "./gen":"./generated/prisma/index.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",

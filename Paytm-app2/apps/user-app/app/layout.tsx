@@ -4,6 +4,7 @@ import { Geist } from "next/font/google";
 import { Providers } from "./providers";
 import { AppbarClient } from "@/components/AppbarClient";
 const geist = Geist({ subsets: ["latin"] });
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Create Turborepo",
@@ -21,6 +22,7 @@ export default function RootLayout({
         
         <body className={geist.className}>
           <Providers>
+            <Toaster position="bottom-right"></Toaster>
             <AppbarClient></AppbarClient>
             {children}
           </Providers>
