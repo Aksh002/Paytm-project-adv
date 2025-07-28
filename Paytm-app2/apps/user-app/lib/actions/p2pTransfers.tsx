@@ -62,6 +62,15 @@ export async function p2pTransfers({ to , amount }:{ to: string , amount:number}
                     }
                 }
             })
+
+            const p2pEntry = await tx.p2Ptransfers.create({
+                data:{
+                    amount: amount,
+                    timestamp: new Date(),
+                    fromUserId: from,
+                    toUserId: toUser.id
+                }
+            })
         })
 
         return{
