@@ -18,36 +18,43 @@ app.post("/hdfcWebhook",async (req,res)=>{
         amount : req.body.amount
     }
     // update balance in db and txn
-    try{
-        
-        await db.$transaction(
-        [
-            db.balance.updateMany({
-                where:{
-                    userId : {
-                        equals: Number(paymentInfo.userId)
-                    }
+    try {
+        await db.$transaction(async (tx) => {
+            const onRampTransaction = await tx.onRampTransactions.findUnique({
+                where: {
+                    token: paymentInfo.token
+                }
+            });
+
+            if (onRampTransaction?.status !== 'Processing') {
+                throw new Error("Transaction not in processing state or not found");
+            }
+
+            await tx.balance.update({
+                where: {
+                    userId: Number(paymentInfo.userId)
                 },
-                data:{
-                    amount:{
-                        increment:Number(paymentInfo.amount)                         // THis way is prefereed over getting the amount of the usr and then doing " amount: userBalance.amount + paymentInfo.amount", because of less of number of db calls, and 2 calls may cause db disparity 
+                data: {
+                    amount: {
+                        increment: Number(paymentInfo.amount)
                     }
                 }
-            })
-            ,
-            db.onRampTransactions.updateMany({
-                where:{
-                    token : paymentInfo.token
+            });
+
+            await tx.onRampTransactions.update({
+                where: {
+                    token: paymentInfo.token,
                 },
-                data:{
-                    "status":"Success",
+                data: {
+                    status: "Success",
                 }
-            })
-        ]);
+            });
+        });
+
         res.json({
-            "message":"Captured"
+            "message": "Captured"
         })
-    }catch(error){
+    } catch (error) {
         console.log(`Webhook Error in updating balance or OnRampTransaction tables :- ${error}`);
         res.status(411).json({
             message : "Error while processing webhook",
